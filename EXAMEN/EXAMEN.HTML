@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXAMEN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .tabla{
+            width: 80%;
+            height: auto;
+            border: 3px solid #000;
+            border-collapse: collapse;
+            text-align: left;
+            margin-left: 10%;
+            margin-right: 10%;
+            background-color: ghostwhite;
+            
+        }
+        .tabla td{            
+            border-bottom: rgb(0, 15, 20) 1px;
+            
+        }
+        .tabla th{
+            color: rgb(0, 0, 0);
+            text-align: center;
+        }
+        .text{
+            text-align: center;
+        }
+        .text{
+            text-align: center;
+        }
+        .button{
+            background-color: #94A3A2;
+        }
+    </style>
+</head>
+<body style="background-color: rgb(198, 255, 252);">
+    <h1 style="text-align: center; margin-top: 3%;">TACOS PEDRO & RODRIGO</h1>
+    <h2 style="text-align: center;">REGISTRO DE RESERVACIONES</h2>
+    <br>
+    <br>
+    <input type="text" name="nombre" placeholder="Nombre" id="nombre" style="margin-left: 25%; width: 50%;">
+    <br>
+    <br>
+    <input type="text" name="apellido" placeholder="Apellido" id="apellido" style="margin-left: 25%; width: 50%;">
+    <br>
+    <br>
+    <input type="date" name="fecha" placeholder="Fecha" id="fecha" style="margin-left: 25%; width: 50%;">
+    <br>
+    <br>
+    <select name="Estatus" id="Estatus" style="margin-left: 25%; width: 50%;">
+        <option value="">Estatus</option>
+        <option value="P">Pendiente</option>
+        <option value="PC">por confirmar</option>
+        <option value="C">Confirmado</option>
+    </select>
+    <br>
+    <br>
+    <button id="registrar" onclick="agregarreservacion(this)" class="button" style="margin-left: 25%; width: 15%;">Reservar</button>
+    <button id="mostrar" onclick="mesadisponible(this)" class="button" style="margin-left: 2%; width: 15%;">Mesas disponibles</button>
+    <button id="buscarreservacion" onclick="buscarmesas(this)" class="button" style="margin-left: 2%; width: 15%;">Buscar mesas ocupadas</button>
+    <br>
+    <br>
+    <table class="tabla">
+        <thead>
+            <tr>
+                <h2 style="text-align: center;">TABLA DE RESERVACIONES</h2>
+                <th>Folio</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Fecha</th>
+                <th>Estatus</th>
+                <th>Mesa</th>
+            </tr>
+        </thead>
+        <tbody id="rev">
+
+        </tbody>
+    </table>
+    
+<script>
+    function agregarreservacion(){
+        var Mesa = [1,2,3,4,5,6];
+        var Folio = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+        var nombre = document.getElementById('nombre').value;
+        var apellido = document.getElementById('apellido').value;
+        var fecha = document.getElementById('fecha').value;
+        var estatus = document.getElementById('Estatus').value;
+        var tabla = document.getElementById('rev');
+        var tr = document.createElement('tr');
+        var td = document.createElement('td');
+        var td2 = document.createElement('td');
+        var td3 = document.createElement('td');
+        var td4 = document.createElement('td');
+        var td5 = document.createElement('td');
+        var td6 = document.createElement('td');
+        td.innerHTML = Folio;
+        td2.innerHTML = nombre;
+        td3.innerHTML = apellido;
+        td4.innerHTML = fecha;
+        td5.innerHTML = estatus;
+        td6.innerHTML = Mesa[Math.floor(Math.random() * 6)];
+        if(estatus == "P"){
+            tr.style.backgroundColor = "rgb(236, 99, 99)";
+        }else if(estatus == "PC"){
+            tr.style.backgroundColor = "rgb(255, 250, 97)";
+        }else if(estatus == "C"){
+            tr.style.backgroundColor = "rgb(138, 255, 97)";
+        }
+        if (nombre == "" || apellido == "" || fecha == "" || estatus == "") {
+            alert('Todos los campos son obligatorios');
+        }else{
+            tr.appendChild(td);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
+            tr.appendChild(td5);
+            tr.appendChild(td6);
+            tabla.appendChild(tr);
+        }
+    }
+
+    function mesadisponible(){
+        var Mesa = [1,2,3,4,5,6];
+        var MESAS = [];
+        for (var i = 0; i < Mesa.length; i++) {
+            alert(Mesa[i]);
+            for (var j = 0; j < MESAS.length; j++) {
+                alert(MESAS[j]);
+                if (Mesa[i] == MESAS[j]) {
+                    Mesa.splice(i, 1);
+                    alert("Mesa ocupada");
+
+                }
+            }
+        }
+    }
+
+    
+
+    function buscarmesas(){
+        var lista = document.getElementById('rev');
+        var nombre = document.getElementById('nombre').value;
+        var apellido = document.getElementById('apellido').value;
+        var fecha = document.getElementById('fecha').value;
+        var estatus = document.getElementById('Estatus').value;
+        var Mesa = prompt("Ingrese la mesa que desea buscar:");
+        for(var i = 0; i < lista.rows.length; i++){
+            if(lista.rows[i].cells[5].innerHTML == Mesa){
+                alert("La mesa: " + Mesa + " esta a nombre de " + nombre + " " + apellido + " para el dia " + fecha + " con el estatus " + estatus);
+            }
+        }
+    }
+</script>
+</html>
